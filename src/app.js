@@ -38,4 +38,17 @@ app.get('/', (req, res) => {
   });
 });
 
+// Socket status check
+app.get('/socket-status', (req, res) => {
+  const { getConnectedUsers } = require('./config/socket');
+  const { riders, drivers } = getConnectedUsers();
+  res.json({
+    success: true,
+    connected: {
+      riders: riders.size,
+      drivers: drivers.size,
+      total: riders.size + drivers.size
+    }
+  });
+});
 module.exports = app;
