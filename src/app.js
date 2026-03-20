@@ -4,6 +4,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const driverRoutes = require('./routes/driverRoutes');
 
 const app = express();
 
@@ -16,13 +18,20 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/driver', driverRoutes);
 
 // Health check
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     message: '🚀 Nippto Backend is Running',
     version: '1.0.0',
-    status: 'healthy'
+    status: 'healthy',
+    endpoints: {
+      auth: '/api/auth',
+      user: '/api/user',
+      driver: '/api/driver'
+    }
   });
 });
 
