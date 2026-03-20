@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const driverRoutes = require('./routes/driverRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/driver', driverRoutes);
+app.use('/api/booking', bookingRoutes);
 
 // Health check
 app.get('/', (req, res) => {
@@ -30,7 +32,8 @@ app.get('/', (req, res) => {
     endpoints: {
       auth: '/api/auth',
       user: '/api/user',
-      driver: '/api/driver'
+      driver: '/api/driver',
+      booking: '/api/booking'
     }
   });
 });

@@ -6,5 +6,4 @@ const { authenticateToken, isRider } = require('../middleware/auth');
 // All routes protected
 router.get('/profile', authenticateToken, isRider, getUserProfile);
 router.put('/profile', authenticateToken, isRider, updateUserProfile);
-
 module.exports = router;

@@ -1,6 +1,5 @@
 const pool = require('../config/db');
 
-// Get user profile
 const getUserProfile = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -30,7 +29,6 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// Update user profile
 const updateUserProfile = async (req, res) => {
   try {
     const userId = req.user.id;

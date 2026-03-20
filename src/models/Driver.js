@@ -67,33 +67,33 @@ class Driver {
   }
 
   // Find nearby online drivers
-  static async findNearby(lat, lng, vehicle_type, radiusKm = 5) {
-    const result = await pool.query(
-      `SELECT id, name, phone, vehicle_type, vehicle_number,
-              rating, current_lat, current_lng,
-              (6371 * acos(
-                cos(radians($1)) * cos(radians(current_lat)) *
-                cos(radians(current_lng) - radians($2)) +
-                sin(radians($1)) * sin(radians(current_lat))
-              )) AS distance_km
-       FROM drivers
-       WHERE is_online = true
-         AND is_verified = true
-         AND is_active = true
-         AND vehicle_type = $3
-         AND current_lat IS NOT NULL
-         AND current_lng IS NOT NULL
-       HAVING (6371 * acos(
-                cos(radians($1)) * cos(radians(current_lat)) *
-                cos(radians(current_lng) - radians($2)) +
-                sin(radians($1)) * sin(radians(current_lat))
-              )) < $4
-       ORDER BY distance_km ASC
-       LIMIT 10`,
-      [lat, lng, vehicle_type, radiusKm]
-    );
-    return result.rows;
-  }
+ static async findNearby(lat, lng, vehicle_type, radiusKm = 5) {
+  const result = await pool.query(
+    `SELECT id, name, phone, vehicle_type, vehicle_number,
+            rating, current_lat, current_lng,
+            (6371 * acos(
+              cos(radians($1)) * cos(radians(current_lat)) *
+              cos(radians(current_lng) - radians($2)) +
+              sin(radians($1)) * sin(radians(current_lat))
+            )) AS distance_km
+     FROM drivers
+     WHERE is_online = true
+       AND is_verified = true
+       AND is_active = true
+       AND vehicle_type = $3
+       AND current_lat IS NOT NULL
+       AND current_lng IS NOT NULL
+       AND (6371 * acos(
+              cos(radians($1)) * cos(radians(current_lat)) *
+              cos(radians(current_lng) - radians($2)) +
+              sin(radians($1)) * sin(radians(current_lat))
+            )) < $4
+     ORDER BY distance_km ASC
+     LIMIT 10`,
+    [lat, lng, vehicle_type, radiusKm]
+  );
+  return result.rows;
+}
 
   // Toggle online status
   static async toggleStatus(id, is_online, lat = null, lng = null) {
