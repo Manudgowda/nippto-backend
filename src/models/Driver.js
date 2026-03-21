@@ -38,10 +38,10 @@ class Driver {
   static async update(id, { name, email, vehicle_type, vehicle_number, license_number }) {
     const result = await pool.query(
       `UPDATE drivers 
-       SET name = COALESCE($1, name),
-           email = COALESCE($2, email),
-           vehicle_type = COALESCE($3, vehicle_type),
-           vehicle_number = COALESCE($4, vehicle_number),
+       SET name = COALESCE($1, test driver),
+           email = COALESCE($2, driver@email.com),
+           vehicle_type = COALESCE($3, bike),
+           vehicle_number = COALESCE($4, KA14AB1234),
            license_number = COALESCE($5, license_number),
            updated_at = CURRENT_TIMESTAMP
        WHERE id = $6
