@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const driverRoutes = require('./routes/driverRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/driver', driverRoutes);
 app.use('/api/booking', bookingRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // Health check
 app.get('/', (req, res) => {
@@ -33,12 +35,13 @@ app.get('/', (req, res) => {
       auth: '/api/auth',
       user: '/api/user',
       driver: '/api/driver',
-      booking: '/api/booking'
+      booking: '/api/booking',
+      payment: '/api/payment'
     }
   });
 });
 
-// Socket status check
+// Socket status
 app.get('/socket-status', (req, res) => {
   const { getConnectedUsers } = require('./config/socket');
   const { riders, drivers } = getConnectedUsers();
@@ -51,4 +54,5 @@ app.get('/socket-status', (req, res) => {
     }
   });
 });
+
 module.exports = app;
