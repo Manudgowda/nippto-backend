@@ -8,12 +8,17 @@ const userRoutes = require('./routes/userRoutes');
 const driverRoutes = require('./routes/driverRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,6 +29,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/driver', driverRoutes);
 app.use('/api/booking', bookingRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/', (req, res) => {
@@ -36,7 +42,8 @@ app.get('/', (req, res) => {
       user: '/api/user',
       driver: '/api/driver',
       booking: '/api/booking',
-      payment: '/api/payment'
+      payment: '/api/payment',
+      admin: '/api/admin'
     }
   });
 });

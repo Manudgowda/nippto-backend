@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nippto Admin Panel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="logo">
+      <span>🛺</span>
+      <h2>Nippto Admin</h2>
+    </div>
+    <nav>
+      <a href="#" class="nav-item active" onclick="showPage('dashboard')">📊 Dashboard</a>
+      <a href="#" class="nav-item" onclick="showPage('rides')">🏍️ Rides</a>
+      <a href="#" class="nav-item" onclick="showPage('drivers')">👨‍💼 Drivers</a>
+      <a href="#" class="nav-item" onclick="showPage('users')">👤 Users</a>
+    </nav>
+  </div>
+
+  <div class="main">
+
+    <div id="dashboard" class="page active">
+      <h1>📊 Dashboard</h1>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🏍️</div>
+          <div class="stat-info"><h3 id="total-rides">...</h3><p>Total Rides</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👤</div>
+          <div class="stat-info"><h3 id="total-users">...</h3><p>Total Users</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👨‍💼</div>
+          <div class="stat-info"><h3 id="total-drivers">...</h3><p>Total Drivers</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-info"><h3 id="total-revenue">...</h3><p>Total Revenue</p></div>
+        </div>
+      </div>
+      <h2>Recent Rides</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>Ride ID</th><th>Pickup</th><th>Drop</th><th>Fare</th><th>Status</th><th>Date</th></tr>
+          </thead>
+          <tbody id="recent-rides-table">
+            <tr><td colspan="6" style="text-align:center;color:#888">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="rides" class="page">
+      <h1>🏍️ All Rides</h1>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>Ride ID</th><th>Pickup</th><th>Drop</th><th>Vehicle</th><th>Fare</th><th>Status</th><th>Date</th></tr>
+          </thead>
+          <tbody id="rides-table">
+            <tr><td colspan="7" style="text-align:center;color:#888">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="drivers" class="page">
+      <h1>👨‍💼 All Drivers</h1>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Phone</th><th>Vehicle</th><th>Status</th><th>Rating</th><th>Total Rides</th><th>Action</th></tr>
+          </thead>
+          <tbody id="drivers-table">
+            <tr><td colspan="7" style="text-align:center;color:#888">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="users" class="page">
+      <h1>👤 All Users</h1>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Phone</th><th>Email</th><th>Status</th><th>Joined</th><th>Action</th></tr>
+          </thead>
+          <tbody id="users-table">
+            <tr><td colspan="6" style="text-align:center;color:#888">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
