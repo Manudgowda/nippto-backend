@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nippto Demo UI</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+    button {
+      padding: 12px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #facc15;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .box {
+      background: #222;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚀 Nippto Live Demo</h1>
+
+<button onclick="connectDriver()">Connect Driver</button>
+<button onclick="connectRider()">Connect Rider</button>
+<button onclick="requestRide()">Request Ride</button>
+
+<div class="box">
+  <h3>Logs</h3>
+  <pre id="logs"></pre>
+</div>
+
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+<script>
+let driverSocket;
+let riderSocket;
+
+const log = (msg) => {
+  document.getElementById('logs').innerText += msg + "\\n";
+};
+
+// ⚠️ USE YOUR TOKENS HERE
+const DRIVER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZkZWFiN2JmLWQzNDktNDkzNy04YzdjLTMwNzRkODJlZmY1NSIsInBob25lIjoiNTU1NTU1NTU1NSIsInR5cGUiOiJkcml2ZXIiLCJpYXQiOjE3NzQwNjUwMDYsImV4cCI6MTc3NjY1NzAwNn0.KPMrbyQOuoj7qZnonSiI95VS6yorwrlVRkkJEj7_7Ns";
+const RIDER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWI2ZDk2LWNiNGQtNDczMS04YjY4LWM2OGI2YTA1NTJhOSIsInBob25lIjoiNjY2NjY2NjY2NiIsInR5cGUiOiJ1c2VyIiwiaWF0IjoxNzc0MDY0OTAxLCJleHAiOjE3NzY2NTY5MDF9.Qf4Ma2U7RI2sjmjgEVrPyG94sXEM0zSiF50pveAoqGI";
+
+function connectDriver() {
+  driverSocket = io("http://localhost:5000", {
+    auth: { token: DRIVER_TOKEN }
+  });
+
+  driverSocket.on("connect", () => {
+    log("🚗 Driver connected");
+
+    driverSocket.emit("driver:toggle_status", {
+      is_online: true,
+      latitude: 13.3379,
+      longitude: 76.6191
+    });
+  });
+
+  driverSocket.on("ride:new_request", (data) => {
+    log("🔥 Driver got ride request: " + JSON.stringify(data));
+
+    // Auto accept
+    driverSocket.emit("driver:accept_ride", {
+      ride_id: data.ride_id
+    });
+  });
+
+  driverSocket.on("ride:accepted_confirmed", (data) => {
+    log("✅ Driver accepted ride");
+  });
+}
+
+function connectRider() {
+  riderSocket = io("http://localhost:5000", {
+    auth: { token: RIDER_TOKEN }
+  });
+
+  riderSocket.on("connect", () => {
+    log("👤 Rider connected");
+  });
+
+  riderSocket.on("ride:requested", (data) => {
+    log("📦 Ride requested: " + JSON.stringify(data));
+  });
+
+  riderSocket.on("ride:driver_assigned", (data) => {
+    log("🎉 Driver assigned: " + JSON.stringify(data));
+  });
+}
+
+function requestRide() {
+  riderSocket.emit("rider:request_ride", {
+    pickup_lat: 13.3379,
+    pickup_lng: 76.6191,
+    drop_lat: 13.3400,
+    drop_lng: 76.6200,
+    vehicle_type: "bike"
+  });
+
+  log("📍 Rider requested ride...");
+}
+</script>
+
+</body>
+</html>
