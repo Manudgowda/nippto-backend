@@ -1,4 +1,4 @@
-const API = 'https://YOUR-RAILWAY-URL.up.railway.app';
+const API = 'https://nippto-backend-production.up.railway.app/api';
 
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));

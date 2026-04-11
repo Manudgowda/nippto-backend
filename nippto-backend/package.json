@@ -1,10 +1,12 @@
 {
   "name": "nippto-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Nippto Ride-Hail Backend — Node.js + Express + Socket.IO + PostgreSQL",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "db:init": "node scripts/initDb.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +21,8 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
