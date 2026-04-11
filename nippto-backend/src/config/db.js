@@ -1,11 +1,20 @@
 const { Pool } = require('pg');
 
+// Railway internal URLs (postgres.railway.internal) don't need SSL
+// Railway external URLs (proxy.rlwy.net) need SSL
+const connectionString = process.env.DATABASE_URL;
+const isInternalRailway = connectionString && connectionString.includes('railway.internal');
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  connectionString,
+  ssl: isInternalRailway
+    ? false
+    : process.env.NODE_ENV === 'production'
+    ? { rejectUnauthorized: false }
+    : false,
   max: 10,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 5000,
+  connectionTimeoutMillis: 10000,
 });
 
 pool.on('error', (err) => {
